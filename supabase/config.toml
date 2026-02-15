@@ -1,0 +1,19 @@
+project_id = "lzodymutqfsntuycivha"
+
+[functions.public-vsl]
+verify_jwt = false
+
+[functions.telemetry-ping]
+verify_jwt = false
+
+[functions.upload-to-bunny]
+verify_jwt = false
+
+[functions.bunny-video-status]
+verify_jwt = false
+
+[functions.bunny-hls-manifest]
+verify_jwt = false
+
+[functions.delete-bunny-video]
+verify_jwt = false
