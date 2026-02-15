@@ -92,14 +92,13 @@ export function VslPreviewPlayer({
   onPlaybackTimeSeconds?: (seconds: number) => void;
 
   showVolume?: boolean;
-  showVolume,
-  showFullscreen,
-  smartAutoplayColor,
-  smartAutoplayOpacity,
-  smartAutoplayIconColor,
-  smartAutoplayTextColor,
-  smartAutoplayBorderRadius,
-}: {
+  showFullscreen?: boolean;
+  smartAutoplayColor?: string | null;
+  smartAutoplayOpacity?: number;
+  smartAutoplayIconColor?: string | null;
+  smartAutoplayTextColor?: string | null;
+  smartAutoplayBorderRadius?: number;
+}) {
   const { user } = useAuth();
 
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
