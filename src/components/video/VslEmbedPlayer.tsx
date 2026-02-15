@@ -556,11 +556,6 @@ export function VslEmbedPlayer({
           </div>
         )}
 
-// ... imports
-import { SmartPlayIcon } from "@/components/video/player/SmartPlayIcon";
-
-// ... inside component render
-
         {/* SmartAutoplay overlay */}
         {Boolean(smartAutoplay) && smartPromptVisible && (
           <button
