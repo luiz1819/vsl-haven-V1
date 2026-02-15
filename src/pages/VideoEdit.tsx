@@ -46,6 +46,10 @@ type VideoConfigRow = {
   player_click_toggle?: boolean;
   smart_resume_color?: string | null;
   smart_autoplay_color?: string | null;
+  smart_autoplay_opacity?: number;
+  smart_autoplay_icon_color?: string | null;
+  smart_autoplay_text_color?: string | null;
+  smart_autoplay_border_radius?: number;
   smart_preload_text?: string | null;
   layout_ratio: string;
   icon_style: string;
@@ -144,7 +148,7 @@ export default function VideoEdit() {
       const { data: row, error: e } = await cloud
         .from("videos")
         .select(
-          "id,title,description,bucket_id,storage_path,bunny_id,status,thumbnail_url,smart_autoplay_enabled,smart_prompt_title,smart_prompt_subtitle,smart_prompt_variant,smart_pause_enabled,smart_pause_text,smart_reload_enabled,smart_reload_continue_text,smart_reload_restart_text,smart_end_enabled,smart_end_text,player_click_toggle,smart_resume_color,smart_autoplay_color,smart_preload_text,layout_ratio,icon_style,cover_color,cover_mode,cover_opacity,cover_saturation,cover_gradient_from,cover_gradient_to,cover_image_url,progress_color,show_volume,show_fullscreen",
+          "id,title,description,bucket_id,storage_path,bunny_id,status,thumbnail_url,smart_autoplay_enabled,smart_prompt_title,smart_prompt_subtitle,smart_prompt_variant,smart_pause_enabled,smart_pause_text,smart_reload_enabled,smart_reload_continue_text,smart_reload_restart_text,smart_end_enabled,smart_end_text,player_click_toggle,smart_resume_color,smart_autoplay_color,smart_autoplay_opacity,smart_autoplay_icon_color,smart_autoplay_text_color,smart_autoplay_border_radius,smart_preload_text,layout_ratio,icon_style,cover_color,cover_mode,cover_opacity,cover_saturation,cover_gradient_from,cover_gradient_to,cover_image_url,progress_color,show_volume,show_fullscreen",
         )
         .eq("id", videoId)
         .maybeSingle();
