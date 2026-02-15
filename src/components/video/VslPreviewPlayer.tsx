@@ -91,12 +91,13 @@ export function VslPreviewPlayer({
   onVideoMetadata?: (meta: { width: number; height: number; aspect: number; duration: number }) => void;
   onPlaybackTimeSeconds?: (seconds: number) => void;
 
+
   showVolume?: boolean;
   showFullscreen?: boolean;
-  smartAutoplayColor?: string | null;
+  smartAutoplayColor?: string;
   smartAutoplayOpacity?: number;
-  smartAutoplayIconColor?: string | null;
-  smartAutoplayTextColor?: string | null;
+  smartAutoplayIconColor?: string;
+  smartAutoplayTextColor?: string;
   smartAutoplayBorderRadius?: number;
 }) {
   const { user } = useAuth();
@@ -274,10 +275,10 @@ export function VslPreviewPlayer({
     if (coverMode === "image") {
       return coverImageUrl
         ? {
-            backgroundImage: `url(${coverImageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }
+          backgroundImage: `url(${coverImageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }
         : { background: "hsl(var(--muted))" };
     }
     return { background: "transparent" };
@@ -415,26 +416,26 @@ export function VslPreviewPlayer({
         )}
 
         {/* VSL overlay: show only the PLAY button; it disappears while playing */
-        /* Also hide if the Smart Pause overlay is visible to avoid double icons */
-        !isPlaying && !pausePromptVisible && !endPromptVisible && (
-          <button
-            type="button"
-            onClick={togglePlay}
-            disabled={!effectiveSrc}
-            className={
-              "absolute grid place-items-center border bg-background/80 text-foreground shadow-sm backdrop-blur transition " +
-              "hover:bg-background/90 active:scale-[0.98] disabled:opacity-50 " +
-              iconShapeClass(iconStyle) +
-              " h-14 w-14"
-            }
-            aria-label="Reproduzir"
-          >
-            {/* Keep the icon upright even for diamond */}
-            <span className={iconStyle === "diamond" ? "-rotate-45" : ""}>
-              <Play className="h-6 w-6" />
-            </span>
-          </button>
-        )}
+          /* Also hide if the Smart Pause overlay is visible to avoid double icons */
+          !isPlaying && !pausePromptVisible && !endPromptVisible && (
+            <button
+              type="button"
+              onClick={togglePlay}
+              disabled={!effectiveSrc}
+              className={
+                "absolute grid place-items-center border bg-background/80 text-foreground shadow-sm backdrop-blur transition " +
+                "hover:bg-background/90 active:scale-[0.98] disabled:opacity-50 " +
+                iconShapeClass(iconStyle) +
+                " h-14 w-14"
+              }
+              aria-label="Reproduzir"
+            >
+              {/* Keep the icon upright even for diamond */}
+              <span className={iconStyle === "diamond" ? "-rotate-45" : ""}>
+                <Play className="h-6 w-6" />
+              </span>
+            </button>
+          )}
 
         {/* Reload resume prompt */}
         {resumePromptVisible && Boolean(smartReloadEnabled) && !Boolean(smartAutoplay) && (
@@ -452,7 +453,7 @@ export function VslPreviewPlayer({
                   } catch {
                     // ignore
                   }
-                  el.play().catch(() => {});
+                  el.play().catch(() => { });
                   setResumePromptVisible(false);
                   setPausePromptVisible(false);
                 }}
@@ -473,7 +474,7 @@ export function VslPreviewPlayer({
                   } catch {
                     // ignore
                   }
-                  el.play().catch(() => {});
+                  el.play().catch(() => { });
                   setResumePromptVisible(false);
                   setPausePromptVisible(false);
                 }}
@@ -500,7 +501,7 @@ export function VslPreviewPlayer({
               } catch {
                 // ignore
               }
-              el.play().catch(() => {});
+              el.play().catch(() => { });
               setEndPromptVisible(false);
               setPausePromptVisible(false);
               setResumePromptVisible(false);
@@ -529,19 +530,19 @@ export function VslPreviewPlayer({
               }
               el.muted = false;
               el.volume = 1;
-              el.play().catch(() => {});
+              el.play().catch(() => { });
               setSmartPromptVisible(false);
             }}
           >
-            <SmartOverlayCard 
-                title={effectiveSmartTitle} 
-                subtitle={effectiveSmartSubtitle} 
-                variant={effectiveSmartVariant} 
-                icon={<SmartPlayIcon color={smartAutoplayIconColor} />}
-                backgroundColor={smartAutoplayColor}
-                opacity={smartAutoplayOpacity}
-                textColor={smartAutoplayTextColor}
-                borderRadius={smartAutoplayBorderRadius}
+            <SmartOverlayCard
+              title={effectiveSmartTitle}
+              subtitle={effectiveSmartSubtitle}
+              variant={effectiveSmartVariant}
+              icon={<SmartPlayIcon color={smartAutoplayIconColor} />}
+              backgroundColor={smartAutoplayColor}
+              opacity={smartAutoplayOpacity}
+              textColor={smartAutoplayTextColor}
+              borderRadius={smartAutoplayBorderRadius}
             />
           </button>
         )}
