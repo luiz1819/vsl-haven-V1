@@ -60,6 +60,8 @@ export function VslPreviewPlayer({
   smartAutoplayIconColor,
   smartAutoplayTextColor,
   smartAutoplayBorderRadius,
+  provider = "bunny",
+  cloudinaryUrl,
 }: {
   videoId?: string;
   signedUrl?: string;
@@ -99,13 +101,21 @@ export function VslPreviewPlayer({
   smartAutoplayIconColor?: string;
   smartAutoplayTextColor?: string;
   smartAutoplayBorderRadius?: number;
+  provider?: "bunny" | "cloudinary";
+  cloudinaryUrl?: string | null;
 }) {
   const { user } = useAuth();
 
+  const isCloudinary = provider === "cloudinary";
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
-  const { manifestUrl, isProcessing, loading: bunnyLoading } = useBunnyHlsManifest(bunnyId, { expiresIn: 60 * 10 });
-  const effectiveSrc = signedUrl ?? manifestUrl;
-  const isHls = Boolean(bunnyId) || Boolean(effectiveSrc && String(effectiveSrc).includes(".m3u8"));
+
+  // Only fetch Bunny manifest if not using Cloudinary and we have a bunnyId
+  const shouldFetchBunny = !isCloudinary && Boolean(bunnyId);
+  const { manifestUrl, isProcessing, loading: bunnyLoading } = useBunnyHlsManifest(shouldFetchBunny ? bunnyId : null, { expiresIn: 60 * 10 });
+
+  const effectiveSrc = isCloudinary ? cloudinaryUrl : (signedUrl ?? manifestUrl);
+  // HLS is true if using Bunny (m3u8)
+  const isHls = !isCloudinary && (Boolean(bunnyId) || Boolean(effectiveSrc && String(effectiveSrc).includes(".m3u8")));
 
   useHlsAttachment({ videoRef, src: effectiveSrc, isHls });
 
